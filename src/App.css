@@ -49,7 +49,7 @@ body{
 .clock-time{
   font-family: 'Orbitron', monospace;
   font-weight:700;
-  font-size:4rem;
+  font-size:6rem;
   line-height:1;
   letter-spacing:0.06em;
   color:var(--accent);

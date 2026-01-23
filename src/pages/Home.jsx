@@ -10,6 +10,7 @@ export default function Home() {
 
         <section className="apps-list">
           <a className="app-link" href="#/clock">Time4Nisha</a>
+          <a className="app-link" href="#/">Coming Soon...</a>
         </section>
       </main>
     </div>
