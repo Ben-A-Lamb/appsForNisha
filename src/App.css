@@ -161,3 +161,47 @@ body{
   .clock-time{ font-size:3.6rem; padding:0.6rem }
   .clock-root{ padding:1rem }
 }
+
+/* Homepage styles */
+.home-root{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: var(--background);
+}
+.home-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px;
+  padding:2rem;
+  max-width:560px;
+  width:92%;
+  color:var(--text);
+  text-align:center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+.home-title{ font-family: 'Orbitron', sans-serif; margin:0; font-size:2rem; color:var(--accent) }
+.home-sub{ margin-top:0.4rem; color:var(--primary) }
+.apps-list{ margin-top:1.2rem; display:flex; flex-direction:column; gap:0.6rem; align-items:center }
+.app-link{ display:inline-block; background:var(--primary); color:var(--background); padding:0.8rem 1.2rem; border-radius:10px; text-decoration:none; font-weight:600 }
+.app-note{ color:var(--text); font-size:0.95rem }
+.home-footer{ margin-top:1rem; color:var(--secondary); font-size:0.85rem }
+
+/* Back button for app pages */
+.back-button{
+  position:fixed;
+  left:1rem;
+  top:1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  padding: 0.4rem 0.75rem;
+  border-radius:8px;
+  z-index:1300;
+  cursor:pointer;
+  font-weight:600;
+}
+
+@media (max-width:420px){
+  .back-button{ left:0.6rem; top:0.6rem; padding:0.35rem 0.6rem }
+}
