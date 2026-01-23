@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+:root{
+  --text: #e8eae7;
+  --background: #080c07;
+  --primary: #b6c9b1;
+  --secondary: #44633c;
+  --accent: #6ca95d;
+}
+
+html,body,#root{
+  height:100%;
+}
+
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: var(--background);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh; /* ensure viewport centering works */
+}
+
+.clock-root{
+  position:relative;
+  padding:2.2rem 2.6rem;
+  border-radius:18px;
+  min-width:340px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center; /* center content vertically within the card */
+  gap:0.5rem;
+  min-height:60vh; /* make the card tall so the time sits centered as the screen height changes */
+}
+
+.clock-root::before{
+  content:'';
+  position:absolute;
+  inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center; /* vertically center content inside the card */
+    gap:0.5rem;
+}
+
+.clock-time{
+  font-family: 'Orbitron', monospace;
+  font-weight:700;
+  font-size:4rem;
+  line-height:1;
+  letter-spacing:0.06em;
+  color:var(--accent);
+  text-shadow: 0 2px 0 var(--background), 0 8px 30px rgba(108,169,93,0.06);
+  -webkit-font-smoothing:antialiased;
+  transform-origin:center;
+  transition: transform 240ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+  will-change:transform,opacity;
+}
+
+/* pulsing animation removed */
+
+.clock-seconds{
+  font-size:0.95rem;
+  color:var(--text);
+  margin-top:2px;
+}
+
+.clock-time{
+  font-family: 'Orbitron', monospace;
+  font-weight:700;
+  font-size:6.5rem; /* larger clock text */
+  line-height:1;
+  letter-spacing:0.06em;
+  color:var(--accent);
+  text-shadow: 0 2px 0 var(--background), 0 8px 30px rgba(108,169,93,0.06);
+  -webkit-font-smoothing:antialiased;
+  transform-origin:center;
+  transition: transform 240ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+  will-change:transform,opacity;
+  display:flex;
+  align-items:center;
+  justify-content:center; /* center text inside the card */
+  text-align:center;
+  padding: 1rem 1.6rem; /* add padding so digits don't jump when width changes */
+}
+.palette-controls{
+  display:flex;
+  gap:0.6rem;
+  align-items:center;
+  margin-top:0.6rem;
+}
+.palette-controls button{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  color:var(--text);
+  padding:0.25rem 0.55rem;
+  border-radius:6px;
+  cursor:pointer;
+}
+.palette-controls .palette-label{
+  color:var(--text);
+  font-size:0.95rem;
+}
+
+/* screen-level controls pinned to viewport bottom-right */
+.screen-controls{
+  position:fixed;
+  right:1rem;
+  bottom:1rem;
+  display:flex;
+  gap:0.75rem;
+  align-items:center;
+  z-index:1200;
+}
+
+.screen-controls .clock-toggle{
+  background: var(--background);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  padding: 0.45rem 0.9rem;
+  border-radius:8px;
+}
+
+.screen-controls .palette-controls button{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  color:var(--text);
+  padding:0.25rem 0.55rem;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+/* Responsive */
+@media (max-width:420px){
+  .clock-root{ min-width:260px; padding:1.2rem 1rem }
+  .clock-time{ font-size:2.4rem }
+}
+
+/* Reduced motion respects */
+@media (prefers-reduced-motion: reduce){
+  .clock-time{ animation:none; transition:none }
+  .clock-toggle{ transition:none }
+}
+
+/* removed flip-digit styles */
+.clock-sep{ color:var(--muted); font-size:4rem; padding:0 0.05em }
+.seconds-plain{ font-family: 'Orbitron', monospace; color:var(--accent); font-size:3.4rem; margin-left:0.08em }
+.ampm{ margin-left:0.6rem; font-size:1rem; color:var(--muted) }
+
+/* stable digit layout to avoid jumping */
+.time-row{ display:flex; gap:0.18em; align-items:baseline; justify-content:center }
+.digit{ font-family: 'Orbitron', monospace; font-variant-numeric: tabular-nums; display:inline-block; min-width:1.05ch; text-align:center; font-size:6.5rem }
+.sep{ color:var(--text); font-size:6.5rem; padding:0 0.05em }
+
+@media (max-width:420px){
+  .digit{ font-size:3.2rem }
+  .sep{ font-size:3.2rem }
+  .clock-time{ font-size:3.6rem; padding:0.6rem }
+  .clock-root{ padding:1rem }
+}
