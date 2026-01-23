@@ -6,6 +6,7 @@ function TimeWithFlips({ date, is24 }) {
   const pad = (n) => String(n).padStart(2, '0')
   const h24 = date.getHours()
   const m = pad(date.getMinutes())
+  const s = pad(date.getSeconds())
 
   const hh = is24 ? pad(h24) : pad(h24 % 12 || 12)
 
@@ -15,6 +16,8 @@ function TimeWithFlips({ date, is24 }) {
       <div className="time">{hh}</div>
       <div className="clock-sep">:</div>
       <div className="time">{m}</div>
+      <div className="clock-sep">:</div>
+      <div className="time">{s}</div>
     </div>
   )
 }
