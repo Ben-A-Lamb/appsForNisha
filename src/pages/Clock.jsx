@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../App.css'
 
 
-function TimeDisplay({ date, is24 }) {
+function TimeDisplay({ date, is24, showSeconds }) {
   const pad = (n) => String(n).padStart(2, '0')
   const h24 = date.getHours()
   const m = pad(date.getMinutes())
@@ -14,8 +14,12 @@ function TimeDisplay({ date, is24 }) {
       <div className="time">{hh}</div>
       <div className="clock-sep">:</div>
       <div className="time">{m}</div>
-      <div className="clock-sep">:</div>
-      <div className="time">{s}</div>
+      {showSeconds ? (
+        <>
+          <div className="clock-sep">:</div>
+          <div className="time">{s}</div>
+        </>
+      ) : null}
     </div>
   )
 }
@@ -26,40 +30,19 @@ function Clock() {
     try {
       const v = localStorage.getItem('clockIs24')
       return v === null ? true : v === '1'
-    } catch (e) {
+    } catch {
       return true
     }
   })
 
-  const palettes = [
-    { text: '#e8eae7', background: '#080c07', primary: '#b6c9b1', secondary: '#44633c', accent: '#6ca95d' },
-    { text: '#e6e7e5', background: '#080907', primary: '#c5ccb0', secondary: '#5f6d3a', accent: '#a4bb64' },
-    { text: '#f2f0f4', background: '#08050a', primary: '#b593d3', secondary: '#582584', accent: '#9c4ce0' },
-    { text: '#ece0e3', background: '#070405', primary: '#d3aab2', secondary: '#763845', accent: '#c17081' },
-    { text: '#e9ebf8', background: '#04050e', primary: '#8c94e3', secondary: '#1a2487', accent: '#4553e3' },
-  ]
-
-  const [paletteIndex, setPaletteIndex] = useState(() => {
+  const [showSeconds, setShowSeconds] = useState(() => {
     try {
-      const v = localStorage.getItem('clockPalette')
-      return v === null ? 0 : Number(v)
-    } catch (e) {
-      return 0
+      const v = localStorage.getItem('clockShowSeconds')
+      return v === null ? true : v === '1'
+    } catch {
+      return true
     }
   })
-
-  useEffect(() => {
-    const p = palettes[paletteIndex] || palettes[0]
-    const root = document.documentElement
-    root.style.setProperty('--text', p.text)
-    root.style.setProperty('--background', p.background)
-    root.style.setProperty('--primary', p.primary)
-    root.style.setProperty('--secondary', p.secondary)
-    root.style.setProperty('--accent', p.accent)
-    try {
-      localStorage.setItem('clockPalette', String(paletteIndex))
-    } catch (e) {}
-  }, [paletteIndex])
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000)
@@ -69,10 +52,18 @@ function Clock() {
   useEffect(() => {
     try {
       localStorage.setItem('clockIs24', is24 ? '1' : '0')
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, [is24])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('clockShowSeconds', showSeconds ? '1' : '0')
+    } catch {
+      // ignore
+    }
+  }, [showSeconds])
 
   return (
     <>
@@ -81,7 +72,7 @@ function Clock() {
       </div>
       <div className="clock-root">
         <div className="clock-time">
-          <TimeDisplay date={now} is24={is24} />
+          <TimeDisplay date={now} is24={is24} showSeconds={showSeconds} />
         </div>
       </div>
 
@@ -94,11 +85,14 @@ function Clock() {
           Switch to {is24 ? '12-hour' : '24-hour'}
         </button>
 
-        <div className="palette-controls">
-          <button onClick={() => setPaletteIndex((i) => (i - 1 + palettes.length) % palettes.length)} aria-label="Previous palette">◀</button>
-          <div className="palette-label">Palette {paletteIndex + 1} / {palettes.length}</div>
-          <button onClick={() => setPaletteIndex((i) => (i + 1) % palettes.length)} aria-label="Next palette">▶</button>
-        </div>
+        <button
+          className="clock-toggle"
+          onClick={() => setShowSeconds((v) => !v)}
+          aria-pressed={showSeconds}
+          style={{ marginLeft: 8 }}
+        >
+          {showSeconds ? 'Hide seconds' : 'Show seconds'}
+        </button>
       </div>
     </>
   )
