@@ -44,6 +44,8 @@ body{
     align-items:center;
     justify-content:center; /* vertically center content inside the card */
     gap:0.5rem;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .clock-time{
@@ -113,7 +115,7 @@ body{
   display:flex;
   gap:0.75rem;
   align-items:center;
-  z-index:1200;
+  z-index:9999;
 }
 
 .screen-controls .clock-toggle{
@@ -122,6 +124,35 @@ body{
   color: var(--text);
   padding: 0.45rem 0.9rem;
   border-radius:8px;
+}
+
+/* isolated controls for clock page buttons (avoid inherited/overlay issues) */
+.clock-controls{
+  position:fixed;
+  right:1rem;
+  bottom:1rem;
+  display:flex;
+  gap:0.75rem;
+  align-items:center;
+  z-index:10005;
+  pointer-events:auto;
+}
+
+.clock-controls .clock-toggle{
+  background: var(--background);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  padding: 0.45rem 0.9rem;
+  border-radius:8px;
+  position:relative;
+  z-index:10006;
+  pointer-events:auto;
+}
+/* ensure the toggle buttons are on top and accept pointer events */
+.screen-controls .clock-toggle{
+  position:relative;
+  z-index:10001;
+  pointer-events:auto;
 }
 
 .screen-controls .palette-controls button{

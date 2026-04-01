@@ -76,7 +76,7 @@ function Clock() {
         </div>
       </div>
 
-      <div className="screen-controls" aria-hidden={false}>
+      <div className="clock-controls" role="group" aria-label="Clock controls" aria-hidden={false}>
         <button
           className="clock-toggle"
           onClick={() => setIs24((v) => !v)}
